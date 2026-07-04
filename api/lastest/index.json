@@ -1,6 +1,12 @@
 {
   "date": "2026-07-04",
-  "prev_date": "2026-07-03",
+  "prev_date": "",
+  "scope": {
+    "label": "男频阅读榜",
+    "rank_url": "https://fanqienovel.com/rank/1_2_1141",
+    "snapshot_prefix": "fanqie_male_read_ranks",
+    "trend_base_path": "data/trends/fanqie_male_read_ranks"
+  },
   "types": [
     {
       "type": "all",
