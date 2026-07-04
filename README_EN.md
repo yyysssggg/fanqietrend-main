@@ -2,7 +2,7 @@
 
 [![中文](https://img.shields.io/badge/lang-中文-red)](README.md)
 
-> 📚 Tracks **Fanqie Novel rankings** with the female new-book ranking as the default, and can be configured for male-oriented or other Fanqie ranking pages. It features daily automated tracking and AI-powered trend analysis, deployed as a premium online dashboard.
+> 📚 Tracks **Fanqie Novel rankings** and can be configured for male-oriented, female-oriented, or other Fanqie ranking pages. It features daily automated tracking and AI-powered trend analysis, deployed as a premium online dashboard.
 
 ---
 
@@ -55,7 +55,7 @@ Go to repo → **Settings** → **Secrets and variables** → **Actions** → **
 
 ### Optional: Track Another Ranking Page
 
-To avoid tracking only the default female ranking, add these repository variables under **Settings** → **Secrets and variables** → **Actions** → **Variables**:
+To switch the tracked ranking scope, add these repository variables under **Settings** → **Secrets and variables** → **Actions** → **Variables**:
 
 | Variable Name | Description | Example |
 |---|---|---|
@@ -63,7 +63,7 @@ To avoid tracking only the default female ranking, add these repository variable
 | `FANQIE_RANK_LABEL` | Display name used by the dashboard and AI prompts | `Fanqie Novel New Book Rank` |
 | `FANQIE_SNAPSHOT_PREFIX` | Snapshot filename prefix for this ranking scope | `fanqie_new_ranks` |
 
-If unset, the project keeps using the original female new-book ranking and existing historical data. When switching ranking pages, also change `FANQIE_SNAPSHOT_PREFIX` to avoid mixing different ranking scopes.
+When switching ranking pages, also change `FANQIE_SNAPSHOT_PREFIX` to avoid mixing different ranking scopes. Existing historical data is preserved and will not block the new ranking scope.
 
 ### Step 4: Trigger the First Run Manually
 
