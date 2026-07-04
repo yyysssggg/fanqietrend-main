@@ -73,7 +73,7 @@ def run_scraper(limit=30, sleep_sec=5):
         categories_js = """
         () => {
             return Array.from(document.querySelectorAll('a'))
-                .filter(a => a.href.includes('/rank/0_1_'))
+                .filter(a => a.href.includes('/rank/1_2_'))
                 .map(a => ({
                     name: a.innerText.trim(),
                     href: a.getAttribute('href')
