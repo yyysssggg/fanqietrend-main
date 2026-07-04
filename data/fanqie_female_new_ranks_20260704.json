@@ -1,26 +1,8 @@
 {
-  "type": "all",
   "date": "2026-07-04",
-  "prev_date": "2026-07-03",
   "categories": [
     {
       "name": "",
-      "trend": {
-        "new_count": 20,
-        "dropped_count": 0,
-        "new_books": [
-          "领主：我在苦痛世界，养成少女",
-          "必死反派的学院地下城生存指南",
-          "穿越异世界，我能看见经验条",
-          "早知道不这么玩了！",
-          "西幻：从鹰人部落到天使帝国"
-        ],
-        "dropped_books": [],
-        "top_risers": [],
-        "top_fallers": [],
-        "reads_growth": [],
-        "summary": "新增20本上榜。"
-      },
       "books": [
         {
           "title": "领主：我在苦痛世界，养成少女",
