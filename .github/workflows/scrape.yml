@@ -32,7 +32,8 @@ jobs:
       id: check_data
       run: |
         TODAY=$(date -u +"%Y%m%d")
-        FILE="data/fanqie_female_new_ranks_${TODAY}.json"
+        PREFIX="${FANQIE_SNAPSHOT_PREFIX:-fanqie_female_new_ranks}"
+        FILE="data/${PREFIX}_${TODAY}.json"
         if [ -f "$FILE" ]; then
           echo "exists=true" >> $GITHUB_OUTPUT
           echo "✅ 今日数据已存在: $FILE，跳过爬取"
@@ -40,6 +41,8 @@ jobs:
           echo "exists=false" >> $GITHUB_OUTPUT
           echo "📭 今日数据不存在，将执行爬取"
         fi
+      env:
+        FANQIE_SNAPSHOT_PREFIX: ${{ vars.FANQIE_SNAPSHOT_PREFIX }}
 
     - name: Set up Python
       uses: actions/setup-python@v5
@@ -60,10 +63,16 @@ jobs:
       run: python scrape_fanqie_ranks.py
       env:
         GITHUB_ACTIONS: true
+        FANQIE_RANK_URL: ${{ vars.FANQIE_RANK_URL }}
+        FANQIE_RANK_LABEL: ${{ vars.FANQIE_RANK_LABEL }}
+        FANQIE_SNAPSHOT_PREFIX: ${{ vars.FANQIE_SNAPSHOT_PREFIX }}
 
     - name: Build Latest Data with AI Summary
       run: pip install openai && python scripts/build_latest.py
       env:
+        FANQIE_RANK_URL: ${{ vars.FANQIE_RANK_URL }}
+        FANQIE_RANK_LABEL: ${{ vars.FANQIE_RANK_LABEL }}
+        FANQIE_SNAPSHOT_PREFIX: ${{ vars.FANQIE_SNAPSHOT_PREFIX }}
         API_BASE_URL: ${{ secrets.API_BASE_URL }}
         API_KEY: ${{ secrets.API_KEY }}
         API_MODEL: ${{ secrets.API_MODEL }}

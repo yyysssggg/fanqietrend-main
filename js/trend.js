@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let marketSummaryData = null;
     let selectedCategory = '';
     let selectedDays = 7;
+    let trendBasePath = 'data/trends';
 
     const genreGroups = [
         { name: '古风言情', categories: ['古风世情', '古言脑洞', '宫斗宅斗', '种田'] },
@@ -46,6 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ]);
             latestData = latestAll;
             marketSummaryData = marketSummary;
+            trendBasePath = (dateIndex.scope && dateIndex.scope.trend_base_path) || trendBasePath;
 
             categories = latestIndex && latestIndex.types
                 ? latestIndex.types.filter(item => item.type !== 'all').map(item => item.type)
@@ -54,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const dates = (dateIndex.dates || []).slice().sort();
             const trendDates = dates.slice(1);
             const trendFiles = await Promise.all(
-                trendDates.map(date => fetchJson(`data/trends/${date}.json?${cacheBuster}`).catch(() => null))
+                trendDates.map(date => fetchJson(`${trendBasePath}/${date}.json?${cacheBuster}`).catch(() => null))
             );
             trendRows = trendFiles
                 .filter(Boolean)
@@ -235,7 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const hotTypes = collectHotTypes(rowsWindow);
         const hotTypeMap = new Map(hotTypes.map(item => [item.name, item]));
 
-        return genreGroups.map(group => {
+        const grouped = genreGroups.map(group => {
             const matched = group.categories
                 .filter(name => categories.includes(name))
                 .map(name => hotTypeMap.get(name) || {
@@ -264,6 +266,12 @@ document.addEventListener('DOMContentLoaded', () => {
         })
             .filter(item => item.score > 0 && item.leadCategory)
             .sort((a, b) => b.score - a.score);
+        if (grouped.length) return grouped;
+        return hotTypes.map(item => ({
+            ...item,
+            leadCategory: item.name,
+            categoryText: item.name,
+        }));
     }
 
     function collectHotTypes(rowsWindow) {

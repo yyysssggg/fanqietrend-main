@@ -2,7 +2,7 @@
 
 [![中文](https://img.shields.io/badge/lang-中文-red)](README.md)
 
-> 👗 Focused exclusively on **Fanqie Novel's Female Category (女频)**, featuring daily automated tracking of new book rankings and AI-powered trend analysis, deployed as a premium online dashboard.
+> 📚 Tracks **Fanqie Novel rankings** with the female new-book ranking as the default, and can be configured for male-oriented or other Fanqie ranking pages. It features daily automated tracking and AI-powered trend analysis, deployed as a premium online dashboard.
 
 ---
 
@@ -10,7 +10,7 @@
 
 | Feature | Description |
 |---------|-------------|
-| 🕷️ Auto Scraping | Daily automated scraping of Top 30 new books across all sub-categories within Fanqie's Female section |
+| 🕷️ Auto Scraping | Daily automated scraping of Top 30 books across all sub-categories under the configured Fanqie ranking page |
 | 📊 Trend Analysis | Automatic day-over-day comparison: new entries / dropped / rank changes / readership growth |
 | 🤖 AI Summary | OpenAI-compatible API integration for per-category market trend analysis |
 | 🖥️ Dashboard | Dark editorial-style dashboard with typewriter animation and waterfall book cards |
@@ -52,6 +52,18 @@ Go to repo → **Settings** → **Secrets and variables** → **Actions** → **
 | `API_MODEL` | Model name | `gpt-4o-mini` |
 
 > **💡 Tip:** Any OpenAI-compatible API works (e.g., Moonshot / DeepSeek / self-hosted endpoints). If these secrets are not configured, the system will automatically fall back to rule-based summaries — **core functionality is unaffected**.
+
+### Optional: Track Another Ranking Page
+
+To avoid tracking only the default female ranking, add these repository variables under **Settings** → **Secrets and variables** → **Actions** → **Variables**:
+
+| Variable Name | Description | Example |
+|---|---|---|
+| `FANQIE_RANK_URL` | Fanqie ranking page URL to track | `https://fanqienovel.com/rank/0_1_1139` |
+| `FANQIE_RANK_LABEL` | Display name used by the dashboard and AI prompts | `Fanqie Novel New Book Rank` |
+| `FANQIE_SNAPSHOT_PREFIX` | Snapshot filename prefix for this ranking scope | `fanqie_new_ranks` |
+
+If unset, the project keeps using the original female new-book ranking and existing historical data. When switching ranking pages, also change `FANQIE_SNAPSHOT_PREFIX` to avoid mixing different ranking scopes.
 
 ### Step 4: Trigger the First Run Manually
 
@@ -112,7 +124,7 @@ FanqieRankTracker/
 ├── scripts/
 │   └── build_latest.py         # Trend comparison + AI analysis build script
 ├── data/
-│   ├── fanqie_female_new_ranks_YYYYMMDD.json  # Daily raw snapshots
+│   ├── <snapshot_prefix>_YYYYMMDD.json  # Daily raw snapshots
 │   ├── latest_ranks.json       # Latest aggregated data (dashboard source)
 │   └── trends/
 │       └── YYYY-MM-DD.json     # Trend archives
@@ -166,7 +178,7 @@ Yes! The system will automatically fall back to rule-based summaries (e.g., "3 n
 <details>
 <summary><b>Q: Can I track other rankings (e.g., male-oriented)?</b></summary>
 
-Yes, modify the `init_url` variable in `scrape_fanqie_ranks.py` to point to the desired ranking page URL.
+Yes. Set `FANQIE_RANK_URL`, `FANQIE_RANK_LABEL`, and `FANQIE_SNAPSHOT_PREFIX`; no source-code edit is needed.
 
 </details>
 

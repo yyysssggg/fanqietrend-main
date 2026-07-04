@@ -14,6 +14,48 @@ import argparse
 from urllib.parse import quote
 
 
+DEFAULT_SNAPSHOT_PREFIX = "fanqie_female_new_ranks"
+DEFAULT_RANK_LABEL = "番茄小说新书榜"
+
+
+def sanitize_snapshot_prefix(value: str) -> str:
+    """清理快照文件前缀，避免生成异常路径。"""
+    value = (value or "").strip()
+    value = re.sub(r"[^A-Za-z0-9_-]+", "_", value)
+    return value.strip("_") or DEFAULT_SNAPSHOT_PREFIX
+
+
+def get_snapshot_prefix() -> str:
+    """读取当前要构建的快照前缀；默认兼容旧女频数据。"""
+    return sanitize_snapshot_prefix(
+        os.environ.get("FANQIE_SNAPSHOT_PREFIX", DEFAULT_SNAPSHOT_PREFIX)
+    )
+
+
+def get_scope(snapshot_data: dict, snapshot_prefix: str) -> dict:
+    """从快照或环境变量生成当前榜单范围信息。"""
+    snapshot_scope = snapshot_data.get("scope") or {}
+    trend_base_path = (
+        "data/trends"
+        if snapshot_prefix == DEFAULT_SNAPSHOT_PREFIX
+        else f"data/trends/{snapshot_prefix}"
+    )
+    return {
+        "label": (
+            os.environ.get("FANQIE_RANK_LABEL")
+            or snapshot_scope.get("label")
+            or DEFAULT_RANK_LABEL
+        ),
+        "rank_url": (
+            os.environ.get("FANQIE_RANK_URL")
+            or snapshot_scope.get("rank_url")
+            or ""
+        ),
+        "snapshot_prefix": snapshot_prefix,
+        "trend_base_path": trend_base_path,
+    }
+
+
 def parse_reads(reads_str: str) -> float:
     """将 '15.2万' 这样的字符串转为数值，用于比较。"""
     if not reads_str or reads_str == "未知":
@@ -428,6 +470,7 @@ def build_lastest_api(output: dict, base_dir: str):
     index_payload = {
         "date": date,
         "prev_date": prev_date,
+        "scope": output.get("scope", {}),
         "types": types,
     }
     write_json(os.path.join(lastest_dir, "index.json"), index_payload)
@@ -444,15 +487,20 @@ def parse_change(change: str) -> int:
         return 0
 
 
-def load_trend_rows(trends_dir: str) -> list:
+def load_trend_rows(trends_dir: str, snapshot_prefix: str = "") -> list:
     """加载全部趋势归档，按日期升序排列。"""
     rows = []
     for path in sorted(glob.glob(os.path.join(trends_dir, "*.json"))):
         try:
             data = load_snapshot(path)
+            scope = data.get("scope") or {}
+            row_prefix = scope.get("snapshot_prefix") or DEFAULT_SNAPSHOT_PREFIX
+            if snapshot_prefix and row_prefix != snapshot_prefix:
+                continue
             rows.append({
                 "date": data.get("date", ""),
                 "prev_date": data.get("prev_date", ""),
+                "scope": scope,
                 "trends": data.get("trends", {}),
             })
         except Exception as e:
@@ -574,11 +622,21 @@ def collect_market_hot_genres(categories: list, hot_types: list) -> list:
             "lead_category": lead["name"],
             "categories": [item["name"] for item in matched],
         })
-    return sorted(
+    genres = sorted(
         genres,
         key=lambda x: (x["read_growth_total"], x["read_count"]),
         reverse=True
     )
+    if genres:
+        return genres
+    return [
+        {
+            **item,
+            "lead_category": item["name"],
+            "categories": [item["name"]],
+        }
+        for item in hot_types
+    ]
 
 
 def add_theme_hits(score_map: dict, text: str, category_name: str, weight: int):
@@ -656,7 +714,8 @@ def build_rule_market_summary(period_label: str, hot_genres: list,
 def build_market_summary_payload(output: dict, trends_dir: str) -> dict:
     """生成全站热点统计和规则兜底总结。"""
     categories = [cat.get("name", "") for cat in output.get("categories", [])]
-    trend_rows = load_trend_rows(trends_dir)
+    scope = output.get("scope", {})
+    trend_rows = load_trend_rows(trends_dir, scope.get("snapshot_prefix", ""))
     periods = {}
 
     for key, days in MARKET_PERIODS:
@@ -681,12 +740,14 @@ def build_market_summary_payload(output: dict, trends_dir: str) -> dict:
     return {
         "date": output.get("date", ""),
         "prev_date": output.get("prev_date", ""),
+        "scope": scope,
         "periods": periods,
     }
 
 
 def build_market_ai_prompt(payload: dict) -> str:
     """构建全站热点 AI 总结 prompt。"""
+    rank_label = (payload.get("scope") or {}).get("label") or DEFAULT_RANK_LABEL
     sections = []
     for key, data in payload.get("periods", {}).items():
         genres = "、".join(
@@ -711,7 +772,7 @@ def build_market_ai_prompt(payload: dict) -> str:
             f"- 规则兜底: {data['fallback_summary']}"
         )
 
-    return f"""你是一位网文市场编辑，请根据番茄女频新书榜的统计结果，为每个周期生成一段全站热点判断。
+    return f"""你是一位网文市场编辑，请根据{rank_label}的统计结果，为每个周期生成一段全站热点判断。
 
 {chr(10).join(sections)}
 
@@ -957,21 +1018,28 @@ def main():
     data_dir = os.path.join(base_dir, "data")
     trends_dir = os.path.join(data_dir, "trends")
     os.makedirs(trends_dir, exist_ok=True)
+    snapshot_prefix = get_snapshot_prefix()
+    trend_scope_dir = (
+        trends_dir
+        if snapshot_prefix == DEFAULT_SNAPSHOT_PREFIX
+        else os.path.join(trends_dir, snapshot_prefix)
+    )
+    os.makedirs(trend_scope_dir, exist_ok=True)
 
     # 查找 JSON 快照文件
     snapshots = sorted(
-        glob.glob(os.path.join(data_dir, "fanqie_female_new_ranks_*.json"))
+        glob.glob(os.path.join(data_dir, f"{snapshot_prefix}_*.json"))
     )
 
     if not snapshots:
-        print("未找到任何 JSON 快照文件。请先运行迁移脚本或爬虫。")
+        print(f"未找到任何 {snapshot_prefix}_*.json 快照文件。请先运行迁移脚本或爬虫。")
         sys.exit(1)
 
     # 根据 --date 参数选择目标快照
     if args.date:
         target_date_compact = args.date.replace("-", "")
         target_path = os.path.join(
-            data_dir, f"fanqie_female_new_ranks_{target_date_compact}.json"
+            data_dir, f"{snapshot_prefix}_{target_date_compact}.json"
         )
         if not os.path.exists(target_path):
             print(f"❌ 未找到 {args.date} 的快照文件: {target_path}")
@@ -984,7 +1052,9 @@ def main():
         target_idx = len(snapshots) - 1
 
     latest_data = load_snapshot(latest_path)
+    scope = get_scope(latest_data, snapshot_prefix)
     print(f"目标快照: {os.path.basename(latest_path)} ({latest_data['date']})")
+    print(f"榜单范围: {scope['label']} ({scope['snapshot_prefix']})")
 
     # 加载前一天的快照（如果有）
     prev_data = None
@@ -997,7 +1067,7 @@ def main():
 
     # 加载已有的趋势数据（用于保留已有 AI 总结）
     existing_trends = {}
-    trend_path = os.path.join(trends_dir, f"{latest_data['date']}.json")
+    trend_path = os.path.join(trend_scope_dir, f"{latest_data['date']}.json")
     if os.path.exists(trend_path) and not args.force:
         try:
             with open(trend_path, "r", encoding="utf-8") as f:
@@ -1066,6 +1136,7 @@ def main():
     output = {
         "date": latest_data["date"],
         "prev_date": prev_date,
+        "scope": scope,
         "categories": [],
     }
 
@@ -1092,6 +1163,7 @@ def main():
     trend_output = {
         "date": latest_data["date"],
         "prev_date": prev_date,
+        "scope": scope,
         "trends": trends,
     }
     with open(trend_path, "w", encoding="utf-8") as f:
@@ -1099,7 +1171,7 @@ def main():
     print(f"✅ 趋势存档: {trend_path}")
 
     # 生成全站热点总结：AI 优先，规则文案兜底
-    market_payload = build_market_summary_payload(output, trends_dir)
+    market_payload = build_market_summary_payload(output, trend_scope_dir)
     if api_base_url and api_key and api_model:
         market_payload = enrich_market_summary_with_ai(
             market_payload, api_key, api_base_url, api_model
@@ -1112,13 +1184,18 @@ def main():
     date_list = []
     for s in snapshots:
         fname = os.path.basename(s)
-        # fanqie_female_new_ranks_YYYYMMDD.json -> YYYY-MM-DD
+        # <snapshot_prefix>_YYYYMMDD.json -> YYYY-MM-DD
         m = re.search(r"(\d{4})(\d{2})(\d{2})", fname)
         if m:
             date_list.append(f"{m.group(1)}-{m.group(2)}-{m.group(3)}")
     dates_path = os.path.join(data_dir, "dates.json")
     with open(dates_path, "w", encoding="utf-8") as f:
-        json.dump({"dates": sorted(date_list)}, f, ensure_ascii=False, indent=2)
+        json.dump(
+            {"dates": sorted(date_list), "scope": scope, "snapshot_prefix": snapshot_prefix},
+            f,
+            ensure_ascii=False,
+            indent=2,
+        )
     print(f"✅ 日期索引: {dates_path} ({len(date_list)} 个日期)")
 
 

@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const categoryTitle = document.getElementById('current-category-title');
     const aiContent = document.getElementById('ai-content');
     const trendPanel = document.getElementById('trend-panel');
+    const sidebarSubtitle = document.querySelector('.sidebar-subtitle');
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');
     const sidebar = document.getElementById('sidebar');
     const dateDisplay = document.getElementById('date-display');
@@ -18,6 +19,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let availableDates = [];   // sorted list of "YYYY-MM-DD"
     let currentDateIndex = -1; // index into availableDates
     let currentCategory = null; // preserve selected category across date switches
+    let snapshotPrefix = 'fanqie_female_new_ranks';
+    let trendBasePath = 'data/trends';
 
     // Cache-busting: 每10分钟一个新key，避免浏览器缓存旧JSON
     const cacheBuster = `v=${Math.floor(Date.now() / 600000)}`;
@@ -174,6 +177,8 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(r => r.ok ? r.json() : Promise.reject('No dates.json'))
         .then(idx => {
             availableDates = idx.dates || [];
+            snapshotPrefix = idx.snapshot_prefix || (idx.scope && idx.scope.snapshot_prefix) || snapshotPrefix;
+            trendBasePath = (idx.scope && idx.scope.trend_base_path) || trendBasePath;
             if (availableDates.length > 0) {
                 // Set min/max for native date input
                 dateInput.min = availableDates[0];
@@ -196,6 +201,8 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .then(data => {
                 allData = data;
+                snapshotPrefix = (data.scope && data.scope.snapshot_prefix) || snapshotPrefix;
+                trendBasePath = (data.scope && data.scope.trend_base_path) || trendBasePath;
                 // Set current index from dates list
                 const latestDate = data.date;
                 currentDateIndex = availableDates.indexOf(latestDate);
@@ -214,7 +221,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function loadDateData(dateStr) {
-        // dateStr = "YYYY-MM-DD", file = fanqie_female_new_ranks_YYYYMMDD.json
+        // dateStr = "YYYY-MM-DD", file = <snapshotPrefix>_YYYYMMDD.json
         const fileDateStr = dateStr.replace(/-/g, '');
         const isLatest = currentDateIndex === availableDates.length - 1;
 
@@ -227,8 +234,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // Show loading state
         waterfall.innerHTML = '<p style="color:var(--text-muted);padding:20px;">加载中...</p>';
 
-        const snapshotUrl = `data/fanqie_female_new_ranks_${fileDateStr}.json?${cacheBuster}`;
-        const trendUrl = `data/trends/${dateStr}.json?${cacheBuster}`;
+        const snapshotUrl = `data/${snapshotPrefix}_${fileDateStr}.json?${cacheBuster}`;
+        const trendUrl = `${trendBasePath}/${dateStr}.json?${cacheBuster}`;
 
         // Load snapshot + trends in parallel
         Promise.all([
@@ -288,6 +295,9 @@ document.addEventListener('DOMContentLoaded', () => {
     function applyData(data) {
         const prevInfo = data.prev_date ? ` (对比 ${data.prev_date})` : '';
         updateDate.textContent = `${data.date}${prevInfo}`;
+        if (sidebarSubtitle && data.scope && data.scope.label) {
+            sidebarSubtitle.textContent = `${data.scope.label}追踪`;
+        }
         updateDateNav();
 
         // Remember current category before re-rendering

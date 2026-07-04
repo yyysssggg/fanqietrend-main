@@ -1,7 +1,9 @@
 import os
 import json
+import re
 import time
 from datetime import datetime
+from urllib.parse import urlparse
 from playwright.sync_api import sync_playwright
 
 START_CODE = 58344  # 0xE3E8
@@ -25,12 +27,50 @@ def decode_text(text: str) -> str:
 # 我们将直接从页面解析所有新书榜类别目录，实现动态抓取
 
 OUTPUT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
+DEFAULT_RANK_URL = "https://fanqienovel.com/rank/0_1_1139"
+DEFAULT_RANK_LABEL = "番茄小说新书榜"
+DEFAULT_SNAPSHOT_PREFIX = "fanqie_female_new_ranks"
+
+
+def sanitize_snapshot_prefix(value: str) -> str:
+    """清理快照文件前缀，避免生成异常路径。"""
+    value = (value or "").strip()
+    value = re.sub(r"[^A-Za-z0-9_-]+", "_", value)
+    return value.strip("_") or DEFAULT_SNAPSHOT_PREFIX
+
+
+def get_scraper_config() -> dict:
+    """读取榜单配置；默认兼容原女频新书榜。"""
+    return {
+        "rank_url": os.environ.get("FANQIE_RANK_URL", DEFAULT_RANK_URL).strip() or DEFAULT_RANK_URL,
+        "rank_label": os.environ.get("FANQIE_RANK_LABEL", DEFAULT_RANK_LABEL).strip() or DEFAULT_RANK_LABEL,
+        "snapshot_prefix": sanitize_snapshot_prefix(
+            os.environ.get("FANQIE_SNAPSHOT_PREFIX", DEFAULT_SNAPSHOT_PREFIX)
+        ),
+    }
+
+
+def derive_rank_href_prefix(rank_url: str) -> str:
+    """从榜单入口推导同组分类链接前缀，如 /rank/0_1_。"""
+    path = urlparse(rank_url).path
+    match = re.match(r"^(/rank/\d+_\d+_)", path)
+    if match:
+        return match.group(1)
+    if path.startswith("/rank/") and "_" in path:
+        return path.rsplit("_", 1)[0] + "_"
+    return "/rank/"
 
 def run_scraper(limit=30, sleep_sec=5):
+    config = get_scraper_config()
+    rank_url = config["rank_url"]
+    rank_label = config["rank_label"]
+    snapshot_prefix = config["snapshot_prefix"]
+
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     date_str = datetime.now().strftime("%Y%m%d")
-    output_file = os.path.join(OUTPUT_DIR, f"fanqie_female_new_ranks_{date_str}.json")
-    state_file = os.path.join(OUTPUT_DIR, f"task_state_{date_str}.json")
+    output_file = os.path.join(OUTPUT_DIR, f"{snapshot_prefix}_{date_str}.json")
+    state_suffix = date_str if snapshot_prefix == DEFAULT_SNAPSHOT_PREFIX else f"{snapshot_prefix}_{date_str}"
+    state_file = os.path.join(OUTPUT_DIR, f"task_state_{state_suffix}.json")
     
     # ------------- 状态恢复逻辑 -------------
     completed_cats = []
@@ -63,24 +103,36 @@ def run_scraper(limit=30, sleep_sec=5):
         )
         page = context.new_page()
         
-        # 先访问新书榜的基准前缀页面，以此为入口模拟人工作业
-        init_url = "https://fanqienovel.com/rank/1_2_1141"
-        print(f"[{datetime.now().strftime('%H:%M:%S')}] 正在初始化并访问基础榜单页：{init_url}")
-        page.goto(init_url, wait_until="load", timeout=15000)
+        # 先访问配置的榜单入口页面，以此为入口模拟人工作业
+        rank_href_prefix = derive_rank_href_prefix(rank_url)
+        print(f"[{datetime.now().strftime('%H:%M:%S')}] 正在初始化并访问榜单页：{rank_url}")
+        print(f"榜单范围：{rank_label}；快照前缀：{snapshot_prefix}")
+        page.goto(rank_url, wait_until="load", timeout=15000)
         page.wait_for_selector('a[href^="/page/"]', timeout=5000)
         
         # 动态解析页面左侧拥有的所有类别目录 (通过匹配对应的榜单路由规律)
         categories_js = """
-        () => {
+        (rankPrefix) => {
+            const seen = new Set();
             return Array.from(document.querySelectorAll('a'))
-                .filter(a => a.href.includes('/rank/1_2_'))
+                .filter(a => {
+                    const href = a.getAttribute('href') || '';
+                    return href.startsWith(rankPrefix);
+                })
                 .map(a => ({
                     name: a.innerText.trim(),
                     href: a.getAttribute('href')
-                }));
+                }))
+                .filter(item => {
+                    if (!item.name || !item.href || seen.has(item.href)) return false;
+                    seen.add(item.href);
+                    return true;
+                });
         }
         """
-        categories = page.evaluate(categories_js)
+        categories = page.evaluate(categories_js, rank_href_prefix)
+        if not categories:
+            raise RuntimeError(f"未能从页面提取分类链接，请检查 FANQIE_RANK_URL 是否有效：{rank_url}")
         print(f"✅ 成功自适应提取到 {len(categories)} 个分类标签。开始全量模拟点击抓取下级数据...")
         
         for cat in categories:
@@ -221,6 +273,11 @@ def run_scraper(limit=30, sleep_sec=5):
             # 每完成一个分类就写入 JSON（防止中断丢数据）
             snapshot = {
                 "date": datetime.now().strftime('%Y-%m-%d'),
+                "scope": {
+                    "label": rank_label,
+                    "rank_url": rank_url,
+                    "snapshot_prefix": snapshot_prefix,
+                },
                 "categories": all_categories
             }
             with open(output_file, 'w', encoding='utf-8') as f:
@@ -241,5 +298,5 @@ def run_scraper(limit=30, sleep_sec=5):
     print(f"\n✅ 当日选定类目任务已完毕或刷新！数据源：{output_file}")
 
 if __name__ == "__main__":
-    print("开始执行番茄女频新书榜抓取计划...")
+    print("开始执行番茄榜单抓取计划...")
     run_scraper(limit=30, sleep_sec=5)
