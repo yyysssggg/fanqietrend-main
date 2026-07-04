@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const categoryTitle = document.getElementById('current-category-title');
     const aiContent = document.getElementById('ai-content');
     const trendPanel = document.getElementById('trend-panel');
+    const trendStats = document.getElementById('trend-stats');
     const sidebarSubtitle = document.querySelector('.sidebar-subtitle');
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');
     const sidebar = document.getElementById('sidebar');
@@ -393,7 +394,35 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderTrend(cat) {
         const trend = cat.trend || {};
         const summary = trend.summary || '';
+        renderTrendStats(cat, trend);
         typewriterEffect(summary);
+    }
+
+    function renderTrendStats(cat, trend) {
+        if (!trendStats) return;
+        const readsLeader = (trend.reads_growth || [])[0];
+        const topRiser = (trend.top_risers || [])[0];
+        const stats = [
+            { label: '当前上榜', value: `${(cat.books || []).length} 本`, tone: 'neutral' },
+            { label: '新上榜', value: `${Number(trend.new_count || 0)} 本`, tone: 'up' },
+            { label: '掉出榜单', value: `${Number(trend.dropped_count || 0)} 本`, tone: 'down' },
+            {
+                label: readsLeader ? `阅读增长 · ${readsLeader.title}` : '阅读增长',
+                value: readsLeader ? readsLeader.growth : '暂无',
+                tone: readsLeader ? 'hot' : 'neutral'
+            },
+            {
+                label: topRiser ? `排名上升 · ${topRiser.title}` : '排名上升',
+                value: topRiser ? topRiser.change : '暂无',
+                tone: topRiser ? 'up' : 'neutral'
+            },
+        ];
+        trendStats.innerHTML = stats.map(item => `
+            <div class="trend-stat trend-stat-${item.tone}">
+                <span>${escapeHtml(item.label)}</span>
+                <strong>${escapeHtml(item.value)}</strong>
+            </div>
+        `).join('');
     }
 
     // ========== Simple Markdown renderer ==========
