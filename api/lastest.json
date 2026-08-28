@@ -1,6 +1,6 @@
 {
-  "date": "2026-08-26",
-  "prev_date": "2026-08-25",
+  "date": "2026-08-28",
+  "prev_date": "2026-08-26",
   "scope": {
     "label": "男频阅读榜",
     "rank_url": "https://fanqienovel.com/rank/1_2_1141",
@@ -12,7 +12,7 @@
       "type": "all",
       "url": "api/lastest/all.json",
       "category_count": 19,
-      "book_count": 380
+      "book_count": 379
     },
     {
       "type": "西方奇幻",
@@ -62,7 +62,7 @@
     {
       "type": "传统玄幻",
       "url": "api/lastest/%E4%BC%A0%E7%BB%9F%E7%8E%84%E5%B9%BB.json",
-      "book_count": 20
+      "book_count": 19
     },
     {
       "type": "历史脑洞",
