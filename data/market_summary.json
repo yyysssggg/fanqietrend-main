@@ -1,6 +1,6 @@
 {
-  "date": "2026-08-28",
-  "prev_date": "2026-08-26",
+  "date": "2026-08-29",
+  "prev_date": "2026-08-28",
   "scope": {
     "label": "男频阅读榜",
     "rank_url": "https://fanqienovel.com/rank/1_2_1141",
@@ -11,16 +11,16 @@
     "7": {
       "period": "近 7 日",
       "source": "rule",
-      "summary": "近 7 日里，幻想言情、游戏体育 的阅读增长更强，具体分类以 历史脑洞、历史古代、游戏体育 的新增在读更集中；新书题材上 系统、重生、种田、年代、修仙、空间 更高频，说明读者仍偏好强设定、强情绪钩子和明确爽点。",
-      "fallback_summary": "近 7 日里，幻想言情、游戏体育 的阅读增长更强，具体分类以 历史脑洞、历史古代、游戏体育 的新增在读更集中；新书题材上 系统、重生、种田、年代、修仙、空间 更高频，说明读者仍偏好强设定、强情绪钩子和明确爽点。",
+      "summary": "近 7 日里，幻想言情、游戏体育 的阅读增长更强，具体分类以 历史脑洞、历史古代、都市脑洞 的新增在读更集中；新书题材上 系统、重生、修仙、年代、种田、校园 更高频，说明读者仍偏好强设定、强情绪钩子和明确爽点。",
+      "fallback_summary": "近 7 日里，幻想言情、游戏体育 的阅读增长更强，具体分类以 历史脑洞、历史古代、都市脑洞 的新增在读更集中；新书题材上 系统、重生、修仙、年代、种田、校园 更高频，说明读者仍偏好强设定、强情绪钩子和明确爽点。",
       "hot_genres": [
         {
           "name": "幻想言情",
-          "score": 857000,
-          "new_count": 8,
-          "dropped_count": 8,
+          "score": 815000,
+          "new_count": 7,
+          "dropped_count": 7,
           "read_count": 42,
-          "read_growth_total": 857000.0,
+          "read_growth_total": 815000.0,
           "active_days": 14,
           "lead_category": "悬疑脑洞",
           "categories": [
@@ -30,11 +30,11 @@
         },
         {
           "name": "游戏体育",
-          "score": 589000,
-          "new_count": 4,
-          "dropped_count": 4,
+          "score": 530000,
+          "new_count": 3,
+          "dropped_count": 3,
           "read_count": 21,
-          "read_growth_total": 589000.0,
+          "read_growth_total": 530000.0,
           "active_days": 7,
           "lead_category": "游戏体育",
           "categories": [
@@ -45,74 +45,74 @@
       "hot_types": [
         {
           "name": "历史脑洞",
-          "score": 765000,
+          "score": 718000,
           "new_count": 7,
           "dropped_count": 7,
           "read_count": 21,
-          "read_growth_total": 765000.0,
+          "read_growth_total": 718000.0,
           "active_days": 7
         },
         {
           "name": "历史古代",
-          "score": 693000,
+          "score": 594000,
           "new_count": 5,
           "dropped_count": 5,
           "read_count": 21,
-          "read_growth_total": 693000.0,
-          "active_days": 7
-        },
-        {
-          "name": "游戏体育",
-          "score": 589000,
-          "new_count": 4,
-          "dropped_count": 4,
-          "read_count": 21,
-          "read_growth_total": 589000.0,
+          "read_growth_total": 594000.0,
           "active_days": 7
         },
         {
           "name": "都市脑洞",
-          "score": 587000,
-          "new_count": 8,
-          "dropped_count": 8,
+          "score": 539000,
+          "new_count": 7,
+          "dropped_count": 7,
           "read_count": 21,
-          "read_growth_total": 587000.0,
+          "read_growth_total": 539000.0,
+          "active_days": 7
+        },
+        {
+          "name": "游戏体育",
+          "score": 530000,
+          "new_count": 3,
+          "dropped_count": 3,
+          "read_count": 21,
+          "read_growth_total": 530000.0,
           "active_days": 7
         },
         {
           "name": "悬疑脑洞",
-          "score": 541000,
+          "score": 529000,
           "new_count": 3,
           "dropped_count": 3,
           "read_count": 21,
-          "read_growth_total": 541000.0,
+          "read_growth_total": 529000.0,
           "active_days": 7
         },
         {
-          "name": "东方仙侠",
-          "score": 430000,
-          "new_count": 6,
-          "dropped_count": 6,
+          "name": "都市高武",
+          "score": 399000,
+          "new_count": 7,
+          "dropped_count": 7,
           "read_count": 21,
-          "read_growth_total": 430000.0,
+          "read_growth_total": 399000.0,
           "active_days": 7
         }
       ],
       "hot_themes": [
         {
           "name": "系统",
-          "count": 36,
+          "count": 34,
           "category_count": 14
         },
         {
           "name": "重生",
-          "count": 15,
-          "category_count": 7
+          "count": 13,
+          "category_count": 6
         },
         {
-          "name": "种田",
-          "count": 8,
-          "category_count": 3
+          "name": "修仙",
+          "count": 7,
+          "category_count": 4
         },
         {
           "name": "年代",
@@ -120,29 +120,29 @@
           "category_count": 5
         },
         {
-          "name": "修仙",
-          "count": 6,
+          "name": "种田",
+          "count": 5,
+          "category_count": 3
+        },
+        {
+          "name": "校园",
+          "count": 5,
           "category_count": 3
         },
         {
           "name": "空间",
-          "count": 5,
+          "count": 4,
           "category_count": 4
         },
         {
-          "name": "校园",
-          "count": 4,
-          "category_count": 2
-        },
-        {
           "name": "直播",
-          "count": 3,
-          "category_count": 2
+          "count": 4,
+          "category_count": 3
         },
         {
-          "name": "末世",
+          "name": "豪门",
           "count": 3,
-          "category_count": 1
+          "category_count": 3
         },
         {
           "name": "民国",
@@ -150,12 +150,7 @@
           "category_count": 1
         },
         {
-          "name": "经商",
-          "count": 2,
-          "category_count": 2
-        },
-        {
-          "name": "豪门",
+          "name": "反派",
           "count": 2,
           "category_count": 2
         },
@@ -165,25 +160,30 @@
           "category_count": 2
         },
         {
-          "name": "废土",
+          "name": "娱乐圈",
           "count": 2,
           "category_count": 2
+        },
+        {
+          "name": "末世",
+          "count": 2,
+          "category_count": 1
         }
       ]
     },
     "14": {
       "period": "近 14 日",
       "source": "rule",
-      "summary": "近 14 日里，幻想言情、游戏体育 的阅读增长更强，具体分类以 都市高武、历史脑洞、都市脑洞 的新增在读更集中；新书题材上 系统、重生、种田、修仙、年代、直播 更高频，说明读者仍偏好强设定、强情绪钩子和明确爽点。",
-      "fallback_summary": "近 14 日里，幻想言情、游戏体育 的阅读增长更强，具体分类以 都市高武、历史脑洞、都市脑洞 的新增在读更集中；新书题材上 系统、重生、种田、修仙、年代、直播 更高频，说明读者仍偏好强设定、强情绪钩子和明确爽点。",
+      "summary": "近 14 日里，幻想言情、游戏体育 的阅读增长更强，具体分类以 都市高武、历史脑洞、历史古代 的新增在读更集中；新书题材上 系统、重生、种田、修仙、年代、直播 更高频，说明读者仍偏好强设定、强情绪钩子和明确爽点。",
+      "fallback_summary": "近 14 日里，幻想言情、游戏体育 的阅读增长更强，具体分类以 都市高武、历史脑洞、历史古代 的新增在读更集中；新书题材上 系统、重生、种田、修仙、年代、直播 更高频，说明读者仍偏好强设定、强情绪钩子和明确爽点。",
       "hot_genres": [
         {
           "name": "幻想言情",
-          "score": 1547000,
+          "score": 1523000,
           "new_count": 15,
           "dropped_count": 15,
           "read_count": 84,
-          "read_growth_total": 1547000.0,
+          "read_growth_total": 1523000.0,
           "active_days": 28,
           "lead_category": "悬疑脑洞",
           "categories": [
@@ -193,11 +193,11 @@
         },
         {
           "name": "游戏体育",
-          "score": 931000,
+          "score": 903000,
           "new_count": 8,
           "dropped_count": 8,
           "read_count": 42,
-          "read_growth_total": 931000.0,
+          "read_growth_total": 903000.0,
           "active_days": 14,
           "lead_category": "游戏体育",
           "categories": [
@@ -208,64 +208,64 @@
       "hot_types": [
         {
           "name": "都市高武",
-          "score": 1949000,
-          "new_count": 10,
-          "dropped_count": 10,
+          "score": 1731000,
+          "new_count": 11,
+          "dropped_count": 11,
           "read_count": 42,
-          "read_growth_total": 1949000.0,
+          "read_growth_total": 1731000.0,
           "active_days": 14
         },
         {
           "name": "历史脑洞",
-          "score": 1414000,
-          "new_count": 14,
-          "dropped_count": 14,
+          "score": 1336000,
+          "new_count": 13,
+          "dropped_count": 13,
           "read_count": 42,
-          "read_growth_total": 1414000.0,
-          "active_days": 14
-        },
-        {
-          "name": "都市脑洞",
-          "score": 1075000,
-          "new_count": 17,
-          "dropped_count": 17,
-          "read_count": 42,
-          "read_growth_total": 1075000.0,
+          "read_growth_total": 1336000.0,
           "active_days": 14
         },
         {
           "name": "历史古代",
-          "score": 1050000,
-          "new_count": 9,
-          "dropped_count": 9,
-          "read_count": 42,
-          "read_growth_total": 1050000.0,
-          "active_days": 14
-        },
-        {
-          "name": "游戏体育",
-          "score": 931000,
+          "score": 1001000,
           "new_count": 8,
           "dropped_count": 8,
           "read_count": 42,
-          "read_growth_total": 931000.0,
+          "read_growth_total": 1001000.0,
+          "active_days": 14
+        },
+        {
+          "name": "都市脑洞",
+          "score": 977000,
+          "new_count": 16,
+          "dropped_count": 16,
+          "read_count": 42,
+          "read_growth_total": 977000.0,
           "active_days": 14
         },
         {
           "name": "悬疑脑洞",
-          "score": 920000,
+          "score": 926000,
           "new_count": 6,
           "dropped_count": 6,
           "read_count": 42,
-          "read_growth_total": 920000.0,
+          "read_growth_total": 926000.0,
+          "active_days": 14
+        },
+        {
+          "name": "东方仙侠",
+          "score": 910000,
+          "new_count": 9,
+          "dropped_count": 9,
+          "read_count": 42,
+          "read_growth_total": 910000.0,
           "active_days": 14
         }
       ],
       "hot_themes": [
         {
           "name": "系统",
-          "count": 53,
-          "category_count": 15
+          "count": 47,
+          "category_count": 14
         },
         {
           "name": "重生",
@@ -274,12 +274,12 @@
         },
         {
           "name": "种田",
-          "count": 9,
+          "count": 10,
           "category_count": 4
         },
         {
           "name": "修仙",
-          "count": 8,
+          "count": 9,
           "category_count": 4
         },
         {
@@ -304,26 +304,16 @@
         },
         {
           "name": "校园",
-          "count": 4,
-          "category_count": 2
-        },
-        {
-          "name": "无CP",
-          "count": 3,
+          "count": 5,
           "category_count": 3
         },
         {
           "name": "豪门",
-          "count": 3,
-          "category_count": 2
+          "count": 4,
+          "category_count": 3
         },
         {
-          "name": "废土",
-          "count": 3,
-          "category_count": 2
-        },
-        {
-          "name": "天灾",
+          "name": "反派",
           "count": 3,
           "category_count": 2
         },
@@ -331,6 +321,16 @@
           "name": "娱乐圈",
           "count": 3,
           "category_count": 2
+        },
+        {
+          "name": "美食",
+          "count": 3,
+          "category_count": 1
+        },
+        {
+          "name": "总裁",
+          "count": 3,
+          "category_count": 1
         }
       ]
     },
@@ -342,11 +342,11 @@
       "hot_genres": [
         {
           "name": "幻想言情",
-          "score": 4926000,
-          "new_count": 33,
-          "dropped_count": 33,
+          "score": 4811000,
+          "new_count": 32,
+          "dropped_count": 32,
           "read_count": 180,
-          "read_growth_total": 4926000.0,
+          "read_growth_total": 4811000.0,
           "active_days": 60,
           "lead_category": "悬疑脑洞",
           "categories": [
@@ -356,11 +356,11 @@
         },
         {
           "name": "游戏体育",
-          "score": 1297000,
+          "score": 1275000,
           "new_count": 22,
           "dropped_count": 22,
           "read_count": 90,
-          "read_growth_total": 1297000.0,
+          "read_growth_total": 1275000.0,
           "active_days": 30,
           "lead_category": "游戏体育",
           "categories": [
@@ -371,73 +371,73 @@
       "hot_types": [
         {
           "name": "都市高武",
-          "score": 5986000,
+          "score": 5735000,
           "new_count": 25,
           "dropped_count": 25,
           "read_count": 90,
-          "read_growth_total": 5986000.0,
+          "read_growth_total": 5735000.0,
           "active_days": 30
         },
         {
           "name": "悬疑脑洞",
-          "score": 3896000,
-          "new_count": 14,
-          "dropped_count": 14,
+          "score": 3784000,
+          "new_count": 13,
+          "dropped_count": 13,
           "read_count": 90,
-          "read_growth_total": 3896000.0,
+          "read_growth_total": 3784000.0,
           "active_days": 30
         },
         {
           "name": "历史古代",
-          "score": 3227000,
-          "new_count": 34,
-          "dropped_count": 34,
-          "read_count": 90,
-          "read_growth_total": 3227000.0,
-          "active_days": 30
-        },
-        {
-          "name": "历史脑洞",
-          "score": 2597000,
+          "score": 3229000,
           "new_count": 33,
           "dropped_count": 33,
           "read_count": 90,
-          "read_growth_total": 2597000.0,
+          "read_growth_total": 3229000.0,
           "active_days": 30
         },
         {
           "name": "玄幻脑洞",
-          "score": 2591000,
-          "new_count": 16,
-          "dropped_count": 16,
+          "score": 2581000,
+          "new_count": 17,
+          "dropped_count": 17,
           "read_count": 90,
-          "read_growth_total": 2591000.0,
+          "read_growth_total": 2581000.0,
+          "active_days": 30
+        },
+        {
+          "name": "历史脑洞",
+          "score": 2561000,
+          "new_count": 32,
+          "dropped_count": 32,
+          "read_count": 90,
+          "read_growth_total": 2561000.0,
           "active_days": 30
         },
         {
           "name": "都市脑洞",
-          "score": 2464000,
-          "new_count": 40,
-          "dropped_count": 40,
+          "score": 2396000,
+          "new_count": 37,
+          "dropped_count": 37,
           "read_count": 90,
-          "read_growth_total": 2464000.0,
+          "read_growth_total": 2396000.0,
           "active_days": 30
         }
       ],
       "hot_themes": [
         {
           "name": "系统",
-          "count": 100,
-          "category_count": 18
+          "count": 92,
+          "category_count": 17
         },
         {
           "name": "重生",
-          "count": 39,
+          "count": 40,
           "category_count": 11
         },
         {
           "name": "修仙",
-          "count": 23,
+          "count": 24,
           "category_count": 5
         },
         {
@@ -452,23 +452,33 @@
         },
         {
           "name": "末世",
-          "count": 10,
+          "count": 9,
           "category_count": 3
+        },
+        {
+          "name": "总裁",
+          "count": 9,
+          "category_count": 2
         },
         {
           "name": "直播",
           "count": 8,
-          "category_count": 4
-        },
-        {
-          "name": "总裁",
-          "count": 8,
-          "category_count": 2
+          "category_count": 5
         },
         {
           "name": "空间",
           "count": 6,
           "category_count": 5
+        },
+        {
+          "name": "校园",
+          "count": 6,
+          "category_count": 4
+        },
+        {
+          "name": "豪门",
+          "count": 5,
+          "category_count": 4
         },
         {
           "name": "基建",
@@ -478,16 +488,6 @@
         {
           "name": "反派",
           "count": 5,
-          "category_count": 3
-        },
-        {
-          "name": "校园",
-          "count": 5,
-          "category_count": 3
-        },
-        {
-          "name": "豪门",
-          "count": 4,
           "category_count": 3
         },
         {
@@ -500,17 +500,17 @@
     "all": {
       "period": "全部样本",
       "source": "rule",
-      "summary": "全部样本里，幻想言情、游戏体育 的阅读增长更强，具体分类以 都市高武、悬疑脑洞、历史古代 的新增在读更集中；新书题材上 系统、重生、修仙、年代、种田、末世 更高频，说明读者仍偏好强设定、强情绪钩子和明确爽点。",
-      "fallback_summary": "全部样本里，幻想言情、游戏体育 的阅读增长更强，具体分类以 都市高武、悬疑脑洞、历史古代 的新增在读更集中；新书题材上 系统、重生、修仙、年代、种田、末世 更高频，说明读者仍偏好强设定、强情绪钩子和明确爽点。",
+      "summary": "全部样本里，幻想言情、游戏体育 的阅读增长更强，具体分类以 都市高武、悬疑脑洞、历史古代 的新增在读更集中；新书题材上 系统、重生、修仙、种田、年代、末世 更高频，说明读者仍偏好强设定、强情绪钩子和明确爽点。",
+      "fallback_summary": "全部样本里，幻想言情、游戏体育 的阅读增长更强，具体分类以 都市高武、悬疑脑洞、历史古代 的新增在读更集中；新书题材上 系统、重生、修仙、种田、年代、末世 更高频，说明读者仍偏好强设定、强情绪钩子和明确爽点。",
       "hot_genres": [
         {
           "name": "幻想言情",
-          "score": 7245000,
-          "new_count": 64,
-          "dropped_count": 64,
-          "read_count": 312,
-          "read_growth_total": 7245000.0,
-          "active_days": 104,
+          "score": 7295000,
+          "new_count": 65,
+          "dropped_count": 65,
+          "read_count": 318,
+          "read_growth_total": 7295000.0,
+          "active_days": 106,
           "lead_category": "悬疑脑洞",
           "categories": [
             "科幻末世",
@@ -519,12 +519,12 @@
         },
         {
           "name": "游戏体育",
-          "score": 1879000,
+          "score": 1882000,
           "new_count": 34,
           "dropped_count": 34,
-          "read_count": 156,
-          "read_growth_total": 1879000.0,
-          "active_days": 52,
+          "read_count": 159,
+          "read_growth_total": 1882000.0,
+          "active_days": 53,
           "lead_category": "游戏体育",
           "categories": [
             "游戏体育"
@@ -534,84 +534,84 @@
       "hot_types": [
         {
           "name": "都市高武",
-          "score": 7975000,
-          "new_count": 45,
-          "dropped_count": 45,
-          "read_count": 156,
-          "read_growth_total": 7975000.0,
-          "active_days": 52
+          "score": 8041000,
+          "new_count": 46,
+          "dropped_count": 46,
+          "read_count": 159,
+          "read_growth_total": 8041000.0,
+          "active_days": 53
         },
         {
           "name": "悬疑脑洞",
-          "score": 5285000,
+          "score": 5320000,
           "new_count": 29,
           "dropped_count": 29,
-          "read_count": 156,
-          "read_growth_total": 5285000.0,
-          "active_days": 52
+          "read_count": 159,
+          "read_growth_total": 5320000.0,
+          "active_days": 53
         },
         {
           "name": "历史古代",
-          "score": 4927000,
+          "score": 4962000,
           "new_count": 49,
           "dropped_count": 49,
-          "read_count": 156,
-          "read_growth_total": 4927000.0,
-          "active_days": 52
+          "read_count": 159,
+          "read_growth_total": 4962000.0,
+          "active_days": 53
         },
         {
           "name": "玄幻脑洞",
-          "score": 4678000,
-          "new_count": 33,
-          "dropped_count": 33,
-          "read_count": 156,
-          "read_growth_total": 4678000.0,
-          "active_days": 52
+          "score": 4736000,
+          "new_count": 34,
+          "dropped_count": 34,
+          "read_count": 159,
+          "read_growth_total": 4736000.0,
+          "active_days": 53
         },
         {
           "name": "都市脑洞",
-          "score": 4513000,
+          "score": 4507000,
           "new_count": 65,
           "dropped_count": 65,
-          "read_count": 156,
-          "read_growth_total": 4513000.0,
-          "active_days": 52
+          "read_count": 159,
+          "read_growth_total": 4507000.0,
+          "active_days": 53
         },
         {
           "name": "历史脑洞",
-          "score": 3944000,
-          "new_count": 57,
-          "dropped_count": 57,
-          "read_count": 156,
-          "read_growth_total": 3944000.0,
-          "active_days": 52
+          "score": 3979000,
+          "new_count": 58,
+          "dropped_count": 58,
+          "read_count": 159,
+          "read_growth_total": 3979000.0,
+          "active_days": 53
         }
       ],
       "hot_themes": [
         {
           "name": "系统",
-          "count": 138,
+          "count": 134,
           "category_count": 18
         },
         {
           "name": "重生",
-          "count": 63,
+          "count": 64,
           "category_count": 12
         },
         {
           "name": "修仙",
-          "count": 38,
+          "count": 39,
           "category_count": 6
+        },
+        {
+          "name": "种田",
+          "count": 27,
+          "category_count": 5
         },
         {
           "name": "年代",
           "count": 26,
           "category_count": 6
-        },
-        {
-          "name": "种田",
-          "count": 24,
-          "category_count": 5
         },
         {
           "name": "末世",
@@ -620,7 +620,7 @@
         },
         {
           "name": "反派",
-          "count": 9,
+          "count": 10,
           "category_count": 7
         },
         {
@@ -630,13 +630,23 @@
         },
         {
           "name": "直播",
-          "count": 8,
-          "category_count": 4
+          "count": 9,
+          "category_count": 5
         },
         {
           "name": "总裁",
-          "count": 8,
+          "count": 9,
           "category_count": 2
+        },
+        {
+          "name": "豪门",
+          "count": 6,
+          "category_count": 4
+        },
+        {
+          "name": "校园",
+          "count": 6,
+          "category_count": 4
         },
         {
           "name": "基建",
@@ -644,17 +654,7 @@
           "category_count": 4
         },
         {
-          "name": "豪门",
-          "count": 5,
-          "category_count": 3
-        },
-        {
           "name": "废土",
-          "count": 5,
-          "category_count": 3
-        },
-        {
-          "name": "校园",
           "count": 5,
           "category_count": 3
         }
