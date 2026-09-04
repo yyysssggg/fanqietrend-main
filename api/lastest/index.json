@@ -1,6 +1,6 @@
 {
-  "date": "2026-09-03",
-  "prev_date": "2026-09-02",
+  "date": "2026-09-04",
+  "prev_date": "2026-09-03",
   "scope": {
     "label": "男频阅读榜",
     "rank_url": "https://fanqienovel.com/rank/1_2_1141",
@@ -12,7 +12,7 @@
       "type": "all",
       "url": "api/lastest/all.json",
       "category_count": 19,
-      "book_count": 379
+      "book_count": 380
     },
     {
       "type": "西方奇幻",
@@ -47,7 +47,7 @@
     {
       "type": "历史古代",
       "url": "api/lastest/%E5%8E%86%E5%8F%B2%E5%8F%A4%E4%BB%A3.json",
-      "book_count": 19
+      "book_count": 20
     },
     {
       "type": "战神赘婿",
